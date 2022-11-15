@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app"
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
+import { getAuth, signInWithPopup, GoogleAuthProvider,signInWithRedirect, createUserWithEmailAndPassword, signOut } from "firebase/auth"
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -26,21 +26,17 @@ provider.setCustomParameters({
 
 export const auth = getAuth()
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider)
 
 export const db = getFirestore()
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (userAuth, additionalInformation) => {
+
+  if (!userAuth) return;
   const userDocRef = doc(db, "users", userAuth.uid)
-  console.log(userDocRef)
-// its' document reference. it's not document 
 
   const userSnapShot = await getDoc(userDocRef)
-  console.log(userSnapShot)
-  // but whe you try to get the ths object 
-  // it will show empty db
-  // .exitst checks if its empty or not
-  // snapshot allow access data
-  // snapshot check if exist.
+
 
   try {
     if (!userSnapShot.exists()) {
@@ -51,11 +47,26 @@ export const createUserDocumentFromAuth = async (userAuth) => {
         displayName,
         email,
         createdAt,
+        ...additionalInformation
       })
     }
   } catch (error) {
-    console.log("error createing the user", error.message)
+    console.log("error creating the user", error.message)
   }
 
   return userDocRef
 }
+
+export const createAuthUserWithEmailAndPassword = async (email, password ) =>{
+  if(!email || !password) {
+    return;
+  }
+
+ return await createUserWithEmailAndPassword(auth, email, password)
+}
+
+export const signOutFromGoogle = async() => {
+  const res = await signOut(auth)
+  
+}
+
