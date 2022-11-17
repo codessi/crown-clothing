@@ -1,5 +1,5 @@
-import { useState } from "react"
-import './sign-up-form.styles.scss'
+import { useState, useContext } from "react"
+import "./sign-up-form.styles.scss"
 import Button from "../button/button.component"
 
 import FormInput from "../form-input/form-input.component"
@@ -9,6 +9,7 @@ import {
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils"
 import { updateProfile } from "firebase/auth"
+import { UserContext } from "../../context/user.context"
 
 const defaultFormFields = {
   displayName: "",
@@ -19,6 +20,8 @@ const defaultFormFields = {
 
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields)
+
+
 
   const { displayName, email, password, confirmPassword } = formFields
 
@@ -48,6 +51,8 @@ const SignUpForm = () => {
         (error) => console.log(error)
       )
 
+    
+
       resetFormFields()
     } catch (error) {
       console.log("user creation encountered error", error)
@@ -55,7 +60,6 @@ const SignUpForm = () => {
   }
 
   return (
-
     <div className="sign-up-container">
       <h2>Don't have an account?</h2>
       <span>Sign up with your email and password</span>
@@ -88,7 +92,7 @@ const SignUpForm = () => {
           value={confirmPassword}
           onChange={handleChange}
         />
-        <Button  type="submit">Sign Up</Button>
+        <Button type="submit">Sign Up</Button>
       </form>
     </div>
   )

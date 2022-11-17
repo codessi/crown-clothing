@@ -1,14 +1,9 @@
 import "./categories.styles.scss"
 import Home from "./routes/home/home.component"
 import { Routes, Route, Outlet } from "react-router-dom"
-import Navigation from "./components/navigation/navigation.component"
-import SignIn from './routes/sign-in.component'
-
-
-
-const ShopPage = () => {
-  return <div>I am shop page</div>
-}
+import Navigation from "./routes/navigation/navigation.component"
+import Authentication from "./routes/authentication/authentication.component"
+import Shop from "./routes/shop/shop.componenet"
 
 function App() {
 
@@ -17,8 +12,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Navigation />}>
         <Route  index element={<Home />} />
-        <Route path="/shop" element={<ShopPage />} />
-        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="shop" element={<Shop />} />
+        <Route path="auth" element={<Authentication />} />
       </Route>
     </Routes>
   )
