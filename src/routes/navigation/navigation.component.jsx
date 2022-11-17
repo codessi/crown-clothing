@@ -25,6 +25,7 @@ const Navigation = () => {
       <div className="navigation">
         <Link className="logo-container" to="/">
           <CrwnLogo className="logo" />
+          JOhan
         </Link>
         <div className="nav-links-container">
           <Link className="nav-link" to="/shop">

@@ -44,13 +44,13 @@ export const CartProvider = ({ children }) => {
   }
 
   useEffect(() => {
-   
-      const total = cartItems.reduce((total,item) => {
+    if (cartItems.length > 0) {
+      const total = cartItems?.reduce((total,item) => {
         return total + item.quantity
       },0)
       console.log(total)
       setCartCount(total)
-    
+    }
   }, [cartItems])
 
   const value = {
